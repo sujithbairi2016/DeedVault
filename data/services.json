@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Raise Property Document Verification",
+    "description": "Get your property documents verified by legal experts instantly",
+    "icon": "✓",
+    "priceRange": "₹1,000 - ₹2,500"
+  },
+  {
+    "id": 2,
+    "title": "Property Documents Services",
+    "description": "Comprehensive document preparation and management services",
+    "icon": "📄",
+    "priceRange": "₹500 - ₹1,500"
+  },
+  {
+    "id": 3,
+    "title": "Newspaper Notices",
+    "description": "Publish and manage legal notices in leading newspapers",
+    "icon": "📰",
+    "priceRange": "₹2,500 - ₹10,000"
+  },
+  {
+    "id": 4,
+    "title": "Legal Opinion",
+    "description": "Expert legal opinions from certified professionals",
+    "icon": "⚖️",
+    "priceRange": "₹1,000 - ₹5,000"
+  },
+  {
+    "id": 5,
+    "title": "Properties for Sale",
+    "description": "Browse verified properties available for purchase",
+    "icon": "🏠",
+    "priceRange": "0.5% - 10% (sale value)"
+  },
+  {
+    "id": 6,
+    "title": "Title Insurance",
+    "description": "Protect your property investment with comprehensive title insurance",
+    "icon": "🛡️",
+    "priceRange": "₹1,000 - ₹5,000"
+  }
+]

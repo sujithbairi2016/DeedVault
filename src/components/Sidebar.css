@@ -1,0 +1,74 @@
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  animation: fadeIn 0.3s ease;
+}
+
+.sidebar {
+  position: fixed;
+  left: -280px;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  transition: left 0.3s ease;
+  padding-top: 70px;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  padding: 16px 24px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.sidebar-link:hover {
+  background-color: #f5f5f5;
+  color: #1e3c72;
+  padding-left: 32px;
+}
+
+.sidebar-link.logout-link {
+  color: #ff4040;
+  margin-top: auto;
+  border-top: 2px solid #ff4040;
+  border-bottom: none;
+}
+
+.sidebar-link.logout-link:hover {
+  background-color: rgba(255, 64, 64, 0.1);
+  color: #cc0000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
