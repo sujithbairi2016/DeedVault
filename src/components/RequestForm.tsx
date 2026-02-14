@@ -14,6 +14,7 @@ export default function RequestForm({ serviceId, user, onCancel, onSaved }: Prop
   const [subject, setSubject] = useState('')
   const [details, setDetails] = useState('')
   const requesterName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : ''
+  const costRange = svc.minPrice && svc.maxPrice ? `₹${svc.minPrice} - ₹${svc.maxPrice}` : '-'
 
   const handleSave = () => {
     const now = new Date().toISOString()
@@ -30,6 +31,7 @@ export default function RequestForm({ serviceId, user, onCancel, onSaved }: Prop
       createdBy,
       modifiedBy: createdBy,
       RequestHistory: '',
+      cost: svc.maxPrice || 0,
     }
     onSaved(serviceId, payload)
   }
@@ -54,6 +56,10 @@ export default function RequestForm({ serviceId, user, onCancel, onSaved }: Prop
               <div className="form-group">
                 <label>Requester Name</label>
                 <div className="form-label">{requesterName || 'Anonymous'}</div>
+              </div>
+              <div className="form-group">
+                <label>Cost</label>
+                <div className="form-label">{costRange}</div>
               </div>
               <div className="form-group">
                 <label>Subject</label>

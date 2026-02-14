@@ -1,5 +1,6 @@
 import React from 'react'
 import './ServiceTiles.css'
+import { useAuth } from '../utils/AuthContext'
 
 interface Props {
   serviceId: number
@@ -21,6 +22,7 @@ const serviceContent: Record<number, { title: string; body: string }> = {
 
 export default function ServiceModal({ serviceId, onClose, onNewRequest }: Props) {
   const content = serviceContent[serviceId] || { title: 'Service', body: 'Details not available.' }
+  const { user } = useAuth()
 
   const handleClose = () => {
     // navigate back to home route if needed
@@ -34,7 +36,12 @@ export default function ServiceModal({ serviceId, onClose, onNewRequest }: Props
       <div className="modal-popup">
         <div className="modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <button className="btn-new-request" onClick={onNewRequest} style={{ marginRight: 8 }}>
+            <button 
+              className="btn-new-request" 
+              onClick={onNewRequest} 
+              style={{ marginRight: 8 }}
+              disabled={!user}
+            >
               New Request
             </button>
             <h2>{content.title}</h2>

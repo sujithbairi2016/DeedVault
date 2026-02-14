@@ -11,6 +11,8 @@ interface Service {
   description: string
   priceRange?: string
   icon: string
+  minPrice?: number
+  maxPrice?: number
 }
 
 interface ServiceRecord {
@@ -148,9 +150,13 @@ export default function ServiceTiles() {
           ❮
         </button>
         <div className="horizontal-tiles-container" ref={scrollContainerRef}>
-          {services.map((service) => (
+          {services.map((service) => {
+            const priceDisplay = service.minPrice && service.maxPrice 
+              ? `₹${service.minPrice} - ₹${service.maxPrice}` 
+              : service.priceRange || '-'
+            return (
             <div key={service.id} className="service-tile-horizontal">
-              {service.priceRange && <div className="tile-price">{service.priceRange}</div>}
+              <div className="tile-price">{priceDisplay}</div>
               <div className="tile-icon">{service.icon}</div>
               <h3 className="tile-title">{service.title}</h3>
               <p className="tile-description">{service.description}</p>
@@ -158,7 +164,8 @@ export default function ServiceTiles() {
                 Learn More
               </button>
             </div>
-          ))}
+            )
+          })}
         </div>
         <button className="scroll-btn scroll-btn-right" onClick={() => scroll('right')} aria-label="Scroll right">
           ❯
@@ -166,6 +173,7 @@ export default function ServiceTiles() {
       </div>
 
       {/* Services Grid/Table */}
+      {user && (
       <div className="services-grid-wrapper">
         <h3 className="grid-title">Service Records</h3>
         <div className="grid-table-container">
@@ -198,7 +206,7 @@ export default function ServiceTiles() {
                     <td>{created}</td>
                     <td>{modifiedDate}</td>
                     <td>{modifiedBy}</td>
-                    <td>${cost.toFixed(2)}</td>
+                    <td>₹{cost.toFixed(2)}</td>
                     <td>
                       <button
                         className="edit-icon-btn"
@@ -216,6 +224,7 @@ export default function ServiceTiles() {
           </table>
         </div>
       </div>
+      )}
 
       {/* Edit Modal */}
       {showEditModal && (
@@ -284,7 +293,12 @@ export default function ServiceTiles() {
 
                 <div className="form-group">
                   <label>Cost</label>
-                  <div className="form-label">{typeof formData?.cost === 'number' ? `$${formData.cost.toFixed(2)}` : '-'}</div>
+                  <input
+                    type="number"
+                    className="form-input"
+                    value={formData?.cost || 0}
+                    onChange={e => setFormData({ ...(formData as any), cost: parseFloat(e.target.value) || 0 })}
+                  />
                 </div>
 
                 <div className="form-group">

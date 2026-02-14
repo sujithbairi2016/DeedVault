@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -11,6 +12,22 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3001;
 const USERS_FILE = path.join(__dirname, 'data', 'users.json');
+const IMAGES_DIR = path.join(__dirname, 'data', 'images');
+
+// Configure multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 300 * 1024 }, // 300KB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only JPG, JPEG, and PNG are allowed.'));
+    }
+  }
+});
 
 // Middleware
 app.use(cors());
@@ -20,6 +37,11 @@ app.use(bodyParser.json());
 const dataDir = path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
+}
+
+// Ensure images directory exists
+if (!fs.existsSync(IMAGES_DIR)) {
+  fs.mkdirSync(IMAGES_DIR, { recursive: true });
 }
 
 // Initialize users.json if it doesn't exist
@@ -287,6 +309,62 @@ app.put('/api/requests/:serviceId/:requestId', (req, res) => {
   } catch (error) {
     console.error('Error updating request:', error);
     res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// Upload user photo endpoint
+app.post('/api/users/upload-photo', (req, res) => {
+  upload.single('photo')(req, res, (err) => {
+    if (err) {
+      console.error('Multer error:', err);
+      return res.status(400).json({ success: false, message: err.message || 'File upload error' });
+    }
+
+    try {
+      const { userId, firstName, lastName } = req.body;
+      const file = req.file;
+
+      if (!file || !userId || !firstName || !lastName) {
+        return res.status(400).json({ success: false, message: 'Missing required fields' });
+      }
+
+      const extension = path.extname(file.originalname).toLowerCase();
+      const filename = `${firstName}_${lastName}_${userId}${extension}`;
+      const filepath = path.join(IMAGES_DIR, filename);
+      
+      fs.writeFileSync(filepath, file.buffer);
+      
+      res.json({ success: true, message: 'Photo uploaded successfully' });
+    } catch (error) {
+      console.error('Photo upload error:', error);
+      res.status(500).json({ success: false, message: error.message || 'Failed to upload photo' });
+    }
+  });
+});
+
+// Get user photo endpoint
+app.get('/api/users/:userId/photo', (req, res) => {
+  try {
+    const { userId } = req.params;
+    
+    const files = fs.readdirSync(IMAGES_DIR);
+    const userFile = files.find(f => f.includes(`_${userId}.`));
+    
+    if (!userFile) {
+      return res.json({ success: false, message: 'Photo not found' });
+    }
+    
+    const filepath = path.join(IMAGES_DIR, userFile);
+    const imageBuffer = fs.readFileSync(filepath);
+    const extension = path.extname(userFile).toLowerCase();
+    const mimeType = extension === '.png' ? 'image/png' : 'image/jpeg';
+    const base64Image = imageBuffer.toString('base64');
+    const dataUrl = `data:${mimeType};base64,${base64Image}`;
+    
+    res.json({ success: true, image: dataUrl });
+  } catch (error) {
+    console.error('Get photo error:', error);
+    res.status(500).json({ success: false, message: 'Failed to retrieve photo' });
   }
 });
 

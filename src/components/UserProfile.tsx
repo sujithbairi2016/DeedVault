@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -14,6 +14,20 @@ interface UserProfileProps {
 export default function UserProfile({ onLogout, onHomeClick, onProfileClick, onEditClick }: UserProfileProps) {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userPhoto, setUserPhoto] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user && user.id) {
+      fetch(`http://localhost:3001/api/users/${user.id}/photo`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.image) {
+            setUserPhoto(data.image)
+          }
+        })
+        .catch(err => console.error('Failed to load photo', err))
+    }
+  }, [user])
 
   const handleLogout = () => {
     logout();
@@ -48,6 +62,11 @@ export default function UserProfile({ onLogout, onHomeClick, onProfileClick, onE
         </div>
 
         <div className="profile-card">
+          {userPhoto && (
+            <div className="profile-photo-section">
+              <img src={userPhoto} alt="Profile" className="profile-photo" />
+            </div>
+          )}
           <div className="profile-section">
             <h3>Personal Information</h3>
             <div className="profile-grid">

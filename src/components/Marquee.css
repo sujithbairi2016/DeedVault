@@ -4,6 +4,9 @@
   border-bottom: 3px solid #ffc107;
   overflow: hidden;
   padding: 16px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .marquee-content {
@@ -11,6 +14,7 @@
   animation: marquee 30s linear infinite;
   gap: 50px;
   white-space: nowrap;
+  flex: 1;
 }
 
 .marquee-content span {
@@ -32,4 +36,27 @@
 
 .marquee-container:hover .marquee-content {
   animation-play-state: paused;
+}
+
+.user-photo-container {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffc107;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.user-photo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -15,6 +15,9 @@ interface EditProfileProps {
 export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onSave, onCancel }: EditProfileProps) {
   const { user, logout, updateProfile, error: authError } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoError, setPhotoError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -27,6 +30,48 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
 
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Load existing photo on mount
+  useEffect(() => {
+    if (user && user.id) {
+      fetch(`http://localhost:3001/api/users/${user.id}/photo`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.image) {
+            setPhotoPreview(data.image)
+          }
+        })
+        .catch(err => console.error('Failed to load photo', err))
+    }
+  }, [user])
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhotoError(null)
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png']
+    if (!validTypes.includes(file.type)) {
+      setPhotoError('Please upload a JPG, JPEG, or PNG image')
+      return
+    }
+
+    // Validate file size (300KB = 300 * 1024 bytes)
+    if (file.size > 300 * 1024) {
+      setPhotoError('Please upload the file with size less than or equal to 300 KB')
+      return
+    }
+
+    setPhotoFile(file)
+    
+    // Create preview
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setPhotoPreview(reader.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -67,6 +112,42 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
     setIsSaving(true);
 
     try {
+      // First upload photo if changed
+      if (photoFile && user?.id) {
+        const photoFormData = new FormData()
+        photoFormData.append('photo', photoFile)
+        photoFormData.append('userId', user.id)
+        photoFormData.append('firstName', formData.firstName)
+        photoFormData.append('lastName', formData.lastName)
+
+        try {
+          const photoResponse = await fetch('http://localhost:3001/api/users/upload-photo', {
+            method: 'POST',
+            body: photoFormData,
+          })
+
+          const contentType = photoResponse.headers.get('content-type')
+          if (contentType && contentType.includes('application/json')) {
+            const photoData = await photoResponse.json()
+            if (!photoResponse.ok || !photoData.success) {
+              setError(photoData.message || 'Failed to upload photo')
+              setIsSaving(false)
+              return
+            }
+          } else {
+            setError('Server error: Invalid response from photo upload')
+            setIsSaving(false)
+            return
+          }
+        } catch (photoErr) {
+          console.error('Photo upload error:', photoErr)
+          setError('Failed to upload photo. Please try again.')
+          setIsSaving(false)
+          return
+        }
+      }
+
+      // Then update profile
       const response = await fetch('http://localhost:3001/api/users/update', {
         method: 'PUT',
         headers: {
@@ -142,11 +223,30 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
         </div>
 
         <form onSubmit={handleSubmit} className="edit-form">
-          {(error || authError) && (
+          {(error || authError || photoError) && (
             <div className="error-message">
-              {error || authError}
+              {error || authError || photoError}
             </div>
           )}
+
+          <div className="form-section">
+            <h3>Profile Photo</h3>
+            <div className="form-group">
+              <label htmlFor="photo">Upload Photo (JPG, JPEG, PNG - Max 300KB)</label>
+              {photoPreview && (
+                <div className="photo-preview">
+                  <img src={photoPreview} alt="Profile preview" />
+                </div>
+              )}
+              <input
+                type="file"
+                id="photo"
+                accept=".jpg,.jpeg,.png"
+                onChange={handlePhotoChange}
+                disabled={isSaving}
+              />
+            </div>
+          </div>
 
           <div className="form-section">
             <h3>Personal Information</h3>

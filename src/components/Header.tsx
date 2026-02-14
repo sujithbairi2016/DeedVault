@@ -17,8 +17,8 @@ export default function Header({ onMenuClick, onHomeClick }: HeaderProps) {
       </button>
 
       {onHomeClick && (
-        <button className="home-btn-header" onClick={onHomeClick} aria-label="Go to home">
-          🏠 Home
+        <button className="home-icon-btn" onClick={onHomeClick} aria-label="Go to home" title="Home">
+          🏠
         </button>
       )}
       

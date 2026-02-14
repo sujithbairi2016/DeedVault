@@ -45,6 +45,36 @@
   flex: 1;
 }
 
+.home-icon-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-left: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.home-icon-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.2) 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.4);
+  border-color: rgba(255,255,255,0.5);
+}
+
+.home-icon-btn:active {
+  transform: translateY(0) scale(1);
+}
+
 .home-btn-header {
   background-color: rgba(102, 126, 234, 0.9);
   color: white;
