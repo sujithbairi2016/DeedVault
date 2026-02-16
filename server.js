@@ -230,7 +230,15 @@ app.get('/api/requests', (req, res) => {
           const filePath = path.join(dataDir, f);
           const raw = fs.readFileSync(filePath, 'utf-8');
           const arr = JSON.parse(raw);
-          if (Array.isArray(arr)) requests.push(...arr);
+          if (Array.isArray(arr)) {
+            // Add serviceDescription from services if missing
+            const enriched = arr.map(r => ({
+              ...r,
+              StatusId: r.StatusId !== undefined ? r.StatusId : 1,
+              IsActive: r.IsActive !== undefined ? r.IsActive : 1
+            }));
+            requests.push(...enriched);
+          }
         } catch (e) {
           console.warn('Failed to read request file', f, e);
         }

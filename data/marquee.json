@@ -1,0 +1,42 @@
+[
+  {
+    "marqueeId": 1,
+    "marqueeTitle": "Welcome to DeedVault",
+    "marqueeDescription": "Your trusted property services partner providing quick transactions, verified documents, and legal certainty for all your property needs.",
+    "marqueeReferenceLinks": [
+      "Fast-track property document verification",
+      "Expert legal opinions from certified professionals",
+      "Comprehensive document preparation services"
+    ]
+  },
+  {
+    "marqueeId": 2,
+    "marqueeTitle": "New Feature Launch",
+    "marqueeDescription": "Fast-track property document verification is now available! Get your documents verified by legal experts in just 2-3 business days.",
+    "marqueeReferenceLinks": [
+      "Upload scanned copies of title documents",
+      "Provide ID proof for verification",
+      "Receive expert legal validation"
+    ]
+  },
+  {
+    "marqueeId": 3,
+    "marqueeTitle": "Property Market Updates",
+    "marqueeDescription": "Stay informed with the latest property market trends, legal updates, and real estate news in our comprehensive News section.",
+    "marqueeReferenceLinks": [
+      "Market analysis and trends",
+      "Legal compliance updates",
+      "Investment opportunities"
+    ]
+  },
+  {
+    "marqueeId": 4,
+    "marqueeTitle": "Monthly Success Milestone",
+    "marqueeDescription": "We are proud to announce that over 1000+ successful transactions have been completed this month, helping families secure their property dreams.",
+    "marqueeReferenceLinks": [
+      "Property document verification services",
+      "Legal opinion consultations",
+      "Document preparation and management"
+    ]
+  }
+]

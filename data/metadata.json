@@ -1,0 +1,46 @@
+{
+  "RequestStatus": [
+    {
+      "StatusId": 1,
+      "StatusName": "New",
+      "DisplayName": "New",
+      "Description": "New Status of request when created.",
+      "Color": "Grey"
+    },
+    {
+      "StatusId": 2,
+      "StatusName": "InProgress",
+      "DisplayName": "In Progress",
+      "Description": "In Progress Status of request is picked to address.",
+      "Color": "Yellow"
+    },
+    {
+      "StatusId": 3,
+      "StatusName": "Resolved",
+      "DisplayName": "Resolved",
+      "Description": "When requested services are addressed from Service Provider.",
+      "Color": "Orange"
+    },
+    {
+      "StatusId": 4,
+      "StatusName": "Received",
+      "DisplayName": "Received",
+      "Description": "When required documents are handed over to Requester.",
+      "Color": "Olive Green"
+    },
+    {
+      "StatusId": 5,
+      "StatusName": "Inactive",
+      "DisplayName": "Inactive",
+      "Description": "When request is halted in between before completion.",
+      "Color": "Dark Grey"
+    },
+    {
+      "StatusId": 6,
+      "StatusName": "Closed",
+      "DisplayName": "Closed",
+      "Description": "When request is completed with confirmation from requester.",
+      "Color": "Green"
+    }
+  ]
+}

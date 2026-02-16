@@ -80,17 +80,19 @@ export default function ServiceTiles() {
   }
 
   // Fetch combined requests from backend
-  useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const res = await fetch('http://localhost:3001/api/requests')
-        if (!res.ok) return
-        const data = await res.json()
-        setServiceRecords(data.requests || [])
-      } catch (err) {
-        console.error('Failed to fetch requests', err)
-      }
+  const fetchRequests = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/api/requests')
+      if (!res.ok) return
+      const data = await res.json()
+      const activeRecords = (data.requests || []).filter((r: any) => r.IsActive === 1)
+      setServiceRecords(activeRecords)
+    } catch (err) {
+      console.error('Failed to fetch requests', err)
     }
+  }
+
+  useEffect(() => {
     fetchRequests()
   }, [])
 
@@ -118,12 +120,7 @@ export default function ServiceTiles() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      // refresh grid
-      const res = await fetch('http://localhost:3001/api/requests')
-      if (res.ok) {
-        const data = await res.json()
-        setServiceRecords(data.requests || [])
-      }
+      await fetchRequests()
     } catch (err) {
       console.error('Failed to save request', err)
     }
@@ -134,6 +131,34 @@ export default function ServiceTiles() {
   const handleFormChange = (field: keyof ServiceRecord, value: string | number) => {
     if (formData) {
       setFormData({ ...formData, [field]: value })
+    }
+  }
+
+  const handleDeactivate = async (record: any) => {
+    try {
+      const updated = { ...record, StatusId: 5, modifiedDate: new Date().toISOString() }
+      await fetch(`http://localhost:3001/api/requests/${record.serviceId}/${record.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated),
+      })
+      await fetchRequests()
+    } catch (err) {
+      console.error('Failed to deactivate request', err)
+    }
+  }
+
+  const handleDelete = async (record: any) => {
+    try {
+      const updated = { ...record, IsActive: 0, modifiedDate: new Date().toISOString() }
+      await fetch(`http://localhost:3001/api/requests/${record.serviceId}/${record.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated),
+      })
+      await fetchRequests()
+    } catch (err) {
+      console.error('Failed to delete request', err)
     }
   }
 
@@ -175,7 +200,17 @@ export default function ServiceTiles() {
       {/* Services Grid/Table */}
       {user && (
       <div className="services-grid-wrapper">
-        <h3 className="grid-title">Service Records</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <h3 className="grid-title">Service Records</h3>
+          <button 
+            className="refresh-btn" 
+            onClick={fetchRequests}
+            title="Refresh records"
+            aria-label="Refresh records"
+          >
+            🔄 Refresh
+          </button>
+        </div>
         <div className="grid-table-container">
           <table className="services-table">
             <thead>
@@ -215,6 +250,22 @@ export default function ServiceTiles() {
                         aria-label="Edit record"
                       >
                         ✏️
+                      </button>
+                      <button
+                        className="deactivate-icon-btn"
+                        onClick={() => handleDeactivate(record)}
+                        title="Deactivate record"
+                        aria-label="Deactivate record"
+                      >
+                        🚫
+                      </button>
+                      <button
+                        className="delete-icon-btn"
+                        onClick={() => handleDelete(record)}
+                        title="Delete record"
+                        aria-label="Delete record"
+                      >
+                        🗑️
                       </button>
                     </td>
                   </tr>
@@ -359,15 +410,7 @@ export default function ServiceTiles() {
                   }
 
                   // refresh grid
-                  try {
-                    const res = await fetch('http://localhost:3001/api/requests')
-                    if (res.ok) {
-                      const data = await res.json()
-                      setServiceRecords(data.requests || [])
-                    }
-                  } catch (e) {
-                    console.error('Failed to refresh requests', e)
-                  }
+                  await fetchRequests()
 
                   setShowEditModal(false)
                   setSelectedRecord(null)

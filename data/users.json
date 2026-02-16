@@ -9,9 +9,9 @@
     "dob": "1981-12-09",
     "gender": "Male",
     "phoneNumber": "7702778554",
-    "address": "Kondapur",
+    "address": "Kondapur Sheshadri Marg",
     "createdAt": "2026-02-11T17:29:53.903Z",
-    "updatedAt": "2026-02-12T14:22:49.799Z"
+    "updatedAt": "2026-02-14T17:29:16.728Z"
   },
   {
     "id": "1770914120318",
@@ -24,6 +24,21 @@
     "gender": "Male",
     "phoneNumber": "8522819178",
     "address": "4-1332, Kondapur, Hyderabad",
-    "createdAt": "2026-02-12T16:35:20.318Z"
+    "createdAt": "2026-02-12T16:35:20.318Z",
+    "updatedAt": "2026-02-14T14:59:55.198Z"
+  },
+  {
+    "id": "1771080887919",
+    "firstName": "Sridhar",
+    "lastName": "Barenkala",
+    "middleName": "",
+    "email": "sridhar.barenkala@gmail.com",
+    "password": "456789",
+    "dob": "1971-05-06",
+    "gender": "Male",
+    "phoneNumber": "9885012390",
+    "address": "Bandlaguda Jagir",
+    "createdAt": "2026-02-14T14:54:47.919Z",
+    "updatedAt": "2026-02-14T16:39:28.903Z"
   }
 ]

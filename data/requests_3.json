@@ -7,13 +7,15 @@
     "details": "Need to post the paper notice to perform auction which is in legal complications.",
     "requesterName": "Akshaj Bairi",
     "createdDate": "2026-02-12T17:11:24.755Z",
-    "modifiedDate": "2026-02-13T16:51:00.058Z",
+    "modifiedDate": "2026-02-14T17:27:10.208Z",
     "createdBy": "Akshaj Bairi",
     "modifiedBy": "Akshaj Bairi",
     "RequestHistory": "[2026-02-12T17:11:45.156Z] Akshaj Bairi: When is the auction date, please mention\n[2026-02-13T16:51:00.058Z] Akshaj Bairi: When is the auction date, please mention",
     "serviceDescription": "Publish and manage legal notices in leading newspapers",
     "__newHistory": "When is the auction date, please mention",
-    "cost": 497
+    "cost": 497,
+    "StatusId": 5,
+    "IsActive": 0
   },
   {
     "id": "1770999909537",
@@ -29,6 +31,8 @@
     "RequestHistory": "[2026-02-13T16:25:46.659Z] Akshaj Bairi: Here is my phone number - 8522819178",
     "cost": 9994,
     "serviceDescription": "Publish and manage legal notices in leading newspapers",
-    "__newHistory": "Here is my phone number - 8522819178"
+    "__newHistory": "Here is my phone number - 8522819178",
+    "StatusId": 1,
+    "IsActive": 1
   }
 ]

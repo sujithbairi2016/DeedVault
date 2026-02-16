@@ -12,6 +12,8 @@
     "modifiedBy": "Akshaj Bairi",
     "RequestHistory": "",
     "serviceDescription": "Expert legal opinions from certified professionals",
-    "cost": 2000
+    "cost": 2000,
+    "StatusId": 1,
+    "IsActive": 1
   }
 ]

@@ -13,6 +13,26 @@
     "RequestHistory": "[2026-02-13T16:50:28.084Z] Akshaj Bairi: Need more details and plan of the building. Please provide at the earliest\n[2026-02-13T16:50:43.453Z] Akshaj Bairi: Need more details and plan of the building. Please provide at the earliest",
     "serviceDescription": "Browse verified properties available for purchase",
     "__newHistory": "Need more details and plan of the building. Please provide at the earliest",
-    "cost": 122
+    "cost": 122,
+    "StatusId": 1,
+    "IsActive": 1
+  },
+  {
+    "id": "1771087046197",
+    "serviceId": 5,
+    "serviceName": "Properties for Sale",
+    "subject": "Wanted to sell the property in Ibrahimpatnam",
+    "details": "Please help me with the process",
+    "requesterName": "Sujith Bairi",
+    "createdDate": "2026-02-14T16:37:26.196Z",
+    "modifiedDate": "2026-02-14T16:38:52.901Z",
+    "createdBy": "Sujith Bairi",
+    "modifiedBy": "Sridhar Barenkala",
+    "RequestHistory": "[2026-02-14T16:38:52.901Z] Sridhar Barenkala: Please send me the details.",
+    "cost": 200,
+    "serviceDescription": "Browse verified properties available for purchase",
+    "__newHistory": "Please send me the details.",
+    "StatusId": 1,
+    "IsActive": 1
   }
 ]

@@ -261,6 +261,75 @@
   transform: scale(0.95);
 }
 
+.deactivate-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deactivate-icon-btn:hover {
+  background-color: rgba(255, 193, 7, 0.15);
+  transform: scale(1.1);
+}
+
+.deactivate-icon-btn:active {
+  transform: scale(0.95);
+}
+
+.delete-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-icon-btn:hover {
+  background-color: rgba(220, 53, 69, 0.15);
+  transform: scale(1.1);
+}
+
+.delete-icon-btn:active {
+  transform: scale(0.95);
+}
+
+.refresh-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.refresh-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.refresh-btn:active {
+  transform: translateY(0);
+}
+
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;

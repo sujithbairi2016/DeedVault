@@ -1,16 +1,23 @@
 import { useState, useEffect } from 'react'
 import './Marquee.css'
 import { useAuth } from '../utils/AuthContext'
+import marqueeData from '../../data/marquee.json'
+
+interface MarqueeItem {
+  marqueeId: number
+  marqueeTitle: string
+  marqueeDescription: string
+  marqueeReferenceLinks: string[]
+}
 
 export default function Marquee() {
   const { user } = useAuth()
   const [userPhoto, setUserPhoto] = useState<string | null>(null)
-  const [marqueeText, setMarqueeText] = useState(
-    '📢 Welcome to DeedVault - Your trusted property services partner | Quick transactions, verified documents, legal certainty'
-  )
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [selectedMarquee, setSelectedMarquee] = useState<MarqueeItem | null>(null)
+  const items = marqueeData as MarqueeItem[]
 
   useEffect(() => {
-    // Fetch user photo if logged in
     if (user && user.id) {
       fetch(`http://localhost:3001/api/users/${user.id}/photo`)
         .then(res => res.json())
@@ -26,34 +33,75 @@ export default function Marquee() {
   }, [user])
 
   useEffect(() => {
-    // Marquee text can be updated from API or props
-    const examples = [
-      '📢 Welcome to DeedVault - Your trusted property services partner | Quick transactions, verified documents, legal certainty',
-      '⚡ New feature: Fast-track property document verification now available',
-      '📰 Latest property market updates available in our News section',
-      '✅ 1000+ successful transactions completed this month',
-    ]
-    
-    let index = 0
     const interval = setInterval(() => {
-      index = (index + 1) % examples.length
-      setMarqueeText(examples[index])
-    }, 8000) // Change every 8 seconds
-
+      setCurrentIndex((prev) => (prev + 1) % items.length)
+    }, 8000)
     return () => clearInterval(interval)
-  }, [])
+  }, [items.length])
+
+  const handleMarqueeClick = () => {
+    setSelectedMarquee(items[currentIndex])
+  }
+
+  const handleCloseDialog = () => {
+    setSelectedMarquee(null)
+  }
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseDialog()
+      }
+    }
+    if (selectedMarquee) {
+      document.addEventListener('keydown', handleEscape)
+    }
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [selectedMarquee])
+
+  const userName = user ? `${user.firstName} ${user.lastName}`.trim() : ''
 
   return (
-    <div className="marquee-container">
-      <div className="marquee-content">
-        <span>{marqueeText}</span>
-        <span>{marqueeText}</span>
-      </div>
-      {userPhoto && (
-        <div className="user-photo-container">
-          <img src={userPhoto} alt="User" className="user-photo" />
+    <>
+      <div className="marquee-container">
+        <div className="marquee-content" onClick={handleMarqueeClick} style={{ cursor: 'pointer' }}>
+          <span>📢 {items[currentIndex].marqueeTitle}</span>
+          <span>📢 {items[currentIndex].marqueeTitle}</span>
         </div>
+        {user && (
+          <div className="user-info-container">
+            {userPhoto && <img src={userPhoto} alt="User" className="user-photo" />}
+            {userName && <span className="user-name">{userName}</span>}
+          </div>
+        )}
+      </div>
+
+      {selectedMarquee && (
+        <>
+          <div className="marquee-dialog-overlay" onClick={handleCloseDialog} />
+          <div className="marquee-dialog">
+            <div className="marquee-dialog-header">
+              <h2>{selectedMarquee.marqueeTitle}</h2>
+              <button className="marquee-dialog-close" onClick={handleCloseDialog} aria-label="Close">
+                ✕
+              </button>
+            </div>
+            <div className="marquee-dialog-content">
+              <p>{selectedMarquee.marqueeDescription}</p>
+              {selectedMarquee.marqueeReferenceLinks.length > 0 && (
+                <>
+                  <h3>Reference Links:</h3>
+                  <ul>
+                    {selectedMarquee.marqueeReferenceLinks.map((link, idx) => (
+                      <li key={idx}>{link}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          </div>
+        </>
       )}
-    </div>
+    </>
   )
 }

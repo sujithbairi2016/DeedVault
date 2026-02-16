@@ -32,6 +32,8 @@ export default function RequestForm({ serviceId, user, onCancel, onSaved }: Prop
       modifiedBy: createdBy,
       RequestHistory: '',
       cost: svc.maxPrice || 0,
+      StatusId: 1,
+      IsActive: 1,
     }
     onSaved(serviceId, payload)
   }
