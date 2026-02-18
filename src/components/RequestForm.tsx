@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './ServiceTiles.css'
 import servicesData from '../../data/services.json'
 
@@ -15,6 +15,14 @@ export default function RequestForm({ serviceId, user, onCancel, onSaved }: Prop
   const [details, setDetails] = useState('')
   const requesterName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : ''
   const costRange = svc.minPrice && svc.maxPrice ? `₹${svc.minPrice} - ₹${svc.maxPrice}` : '-'
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onCancel()
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [])
 
   const handleSave = () => {
     const now = new Date().toISOString()

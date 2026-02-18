@@ -1,3 +1,13 @@
+:root {
+  --primary-color: #1e3c72;
+  --secondary-color: #2a5298;
+  --accent-color: #667eea;
+  --background-color: #f3f4f8;
+  --text-color: #333333;
+  --header-gradient-start: #1e3c72;
+  --header-gradient-end: #2a5298;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,6 +25,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .app-container {

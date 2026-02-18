@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ServiceTiles.css'
 import { useAuth } from '../utils/AuthContext'
 
@@ -24,10 +24,17 @@ export default function ServiceModal({ serviceId, onClose, onNewRequest }: Props
   const content = serviceContent[serviceId] || { title: 'Service', body: 'Details not available.' }
   const { user } = useAuth()
 
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [])
+
   const handleClose = () => {
-    // navigate back to home route if needed
     onClose()
-    // keep user on page - main app will remain
+    window.location.href = '/'
   }
 
   return (
@@ -48,11 +55,7 @@ export default function ServiceModal({ serviceId, onClose, onNewRequest }: Props
           </div>
           <button
             className="modal-close-btn"
-            onClick={() => {
-              handleClose()
-              // navigate to home (root) — using window.location to satisfy requirement
-              window.location.href = '/'
-            }}
+            onClick={handleClose}
             aria-label="Close modal"
           >
             ✕

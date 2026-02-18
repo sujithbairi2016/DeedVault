@@ -1,0 +1,77 @@
+.filter-dropdown-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.filter-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 4px;
+  color: #999;
+  transition: all 0.2s;
+}
+
+.filter-icon-btn:hover {
+  color: #667eea;
+  transform: scale(1.1);
+}
+
+.filter-icon-btn.active {
+  color: #667eea;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 8px;
+  z-index: 1000;
+  min-width: 200px;
+  margin-top: 4px;
+}
+
+.filter-input-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filter-dropdown-input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.filter-dropdown-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.filter-clear-btn {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.filter-clear-btn:hover {
+  background: #e0e0e0;
+  color: #333;
+}

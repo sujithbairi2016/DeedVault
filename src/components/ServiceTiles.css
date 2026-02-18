@@ -1,6 +1,6 @@
 .services-section {
   padding: 20px 40px;
-  background: #f3f4f8;
+  background: var(--background-color);
   flex: 1;
 }
 
@@ -11,7 +11,7 @@
 
 .services-header h2 {
   font-size: 32px;
-  color: #1e3c72;
+  color: var(--primary-color);
   margin-bottom: 6px;
   font-weight: 700;
 }
@@ -68,7 +68,7 @@
 }
 
 .scroll-btn {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   color: white;
   border: none;
   width: 44px;
@@ -114,7 +114,7 @@
 
 .tile-title {
   font-size: 13px;
-  color: #1e3c72;
+  color: var(--primary-color);
   font-weight: 600;
   margin-bottom: 12px;
   line-height: 1.4;
@@ -129,7 +129,7 @@
 }
 
 .tile-button {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   color: white;
   border: none;
   padding: 6px 10px;
@@ -182,7 +182,7 @@
 
 .grid-title {
   font-size: 20px;
-  color: #1e3c72;
+  color: var(--primary-color);
   font-weight: 600;
   margin-bottom: 12px;
 }
@@ -201,12 +201,12 @@
 }
 
 .services-table thead {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
   color: white;
 }
 
 .services-table th {
-  padding: 8px 12px;
+  padding: 2mm;
   text-align: left;
   font-weight: 600;
   font-size: 14px;
@@ -214,7 +214,7 @@
 }
 
 .services-table td {
-  padding: 6px 12px;
+  padding: 2mm;
   border-bottom: 1px solid #eee;
   font-size: 13px;
   color: #333;
@@ -244,7 +244,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  padding: 6px 12px;
+  padding: 2mm;
   border-radius: 4px;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -266,7 +266,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  padding: 6px 12px;
+  padding: 2mm;
   border-radius: 4px;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -288,7 +288,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  padding: 6px 12px;
+  padding: 2mm;
   border-radius: 4px;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -390,7 +390,7 @@
 .modal-header h2 {
   margin: 0;
   font-size: 18px;
-  color: #1e3c72;
+  color: var(--primary-color);
   font-weight: 700;
 }
 
@@ -434,7 +434,7 @@
 .form-group label {
   font-size: 13px;
   font-weight: 600;
-  color: #1e3c72;
+  color: var(--primary-color);
 }
 
 .form-input {
@@ -490,7 +490,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   color: #fff;
   font-weight: bold;
   border: none;
@@ -506,9 +506,9 @@
 }
 .btn-secondary {
   background: #fff;
-  color: #1e3c72;
+  color: var(--primary-color);
   font-weight: bold;
-  border: 2.5px solid #1e3c72;
+  border: 2.5px solid var(--primary-color);
   padding: 8px 18px;
   border-radius: 6px;
   cursor: pointer;
@@ -734,4 +734,69 @@
     font-size: 14px;
     margin-bottom: 16px;
   }
+}
+
+.filter-row th {
+  padding: 2mm;
+  background: #f8f9fa;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 2mm;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #2a5298;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2mm;
+  margin-top: 2mm;
+  padding: 2mm;
+}
+
+.pagination button {
+  padding: 2mm 4mm;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #f0f0f0;
+  border-color: #2a5298;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 13px;
+  color: #333;
+}
+
+.service-tooltip {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 2mm 3mm;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 10000;
+  max-width: 300px;
+  word-wrap: break-word;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }

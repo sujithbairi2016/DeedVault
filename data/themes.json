@@ -1,0 +1,57 @@
+[
+  {
+    "themeId": 1,
+    "themeName": "Ocean Blue",
+    "primaryColor": "#1e3c72",
+    "secondaryColor": "#2a5298",
+    "accentColor": "#667eea",
+    "backgroundColor": "#f3f4f8",
+    "textColor": "#333333",
+    "headerGradientStart": "#1e3c72",
+    "headerGradientEnd": "#2a5298"
+  },
+  {
+    "themeId": 2,
+    "themeName": "Forest Green",
+    "primaryColor": "#0f5132",
+    "secondaryColor": "#198754",
+    "accentColor": "#20c997",
+    "backgroundColor": "#f1f8f4",
+    "textColor": "#212529",
+    "headerGradientStart": "#0f5132",
+    "headerGradientEnd": "#198754"
+  },
+  {
+    "themeId": 3,
+    "themeName": "Sunset Orange",
+    "primaryColor": "#d63384",
+    "secondaryColor": "#fd7e14",
+    "accentColor": "#ffc107",
+    "backgroundColor": "#fff5f0",
+    "textColor": "#2c2c2c",
+    "headerGradientStart": "#d63384",
+    "headerGradientEnd": "#fd7e14"
+  },
+  {
+    "themeId": 4,
+    "themeName": "Royal Purple",
+    "primaryColor": "#6f42c1",
+    "secondaryColor": "#8b5cf6",
+    "accentColor": "#a78bfa",
+    "backgroundColor": "#f8f7fc",
+    "textColor": "#1f1f1f",
+    "headerGradientStart": "#6f42c1",
+    "headerGradientEnd": "#8b5cf6"
+  },
+  {
+    "themeId": 5,
+    "themeName": "Midnight Dark",
+    "primaryColor": "#1a1a2e",
+    "secondaryColor": "#16213e",
+    "accentColor": "#0f3460",
+    "backgroundColor": "#e8e8e8",
+    "textColor": "#0a0a0a",
+    "headerGradientStart": "#1a1a2e",
+    "headerGradientEnd": "#16213e"
+  }
+]

@@ -11,6 +11,7 @@ export interface User {
   gender: string;
   address: string;
   password?: string;
+  themeId?: number;
 }
 
 interface AuthContextType {

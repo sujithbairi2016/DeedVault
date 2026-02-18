@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AuthProvider, useAuth } from './utils/AuthContext'
+import { ThemeProvider, useTheme } from './utils/ThemeContext'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Marquee from './components/Marquee'
@@ -11,9 +12,16 @@ import UserProfile from './components/UserProfile'
 import EditProfile from './components/EditProfile'
 
 function AppContent() {
-  const { isLoggedIn } = useAuth()
+  const { isLoggedIn, user } = useAuth()
+  const { setTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState<'home' | 'login' | 'create-account' | 'profile' | 'edit-profile'>('home')
+
+  useEffect(() => {
+    if (user && user.themeId) {
+      setTheme(user.themeId)
+    }
+  }, [user, setTheme])
 
   // If user is logged in
   if (isLoggedIn) {
@@ -127,9 +135,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

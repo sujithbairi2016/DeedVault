@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../utils/AuthContext';
+import { useTheme } from '../utils/ThemeContext';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import './EditProfile.css';
@@ -14,10 +15,13 @@ interface EditProfileProps {
 
 export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onSave, onCancel }: EditProfileProps) {
   const { user, logout, updateProfile, error: authError } = useAuth();
+  const { themes, currentTheme, applyTheme, setTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
+  const [selectedThemeId, setSelectedThemeId] = useState(user?.themeId || 1);
+  const [previewThemeId, setPreviewThemeId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -112,7 +116,6 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
     setIsSaving(true);
 
     try {
-      // First upload photo if changed
       if (photoFile && user?.id) {
         const photoFormData = new FormData()
         photoFormData.append('photo', photoFile)
@@ -147,7 +150,6 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
         }
       }
 
-      // Then update profile
       const response = await fetch('http://localhost:3001/api/users/update', {
         method: 'PUT',
         headers: {
@@ -162,6 +164,7 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
           gender: formData.gender,
           phoneNumber: formData.phoneNumber,
           address: formData.address,
+          themeId: selectedThemeId,
         }),
       });
 
@@ -182,6 +185,7 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
       setIsSaving(false);
 
       if (data.success) {
+        setTheme(selectedThemeId);
         onSave();
       } else {
         setError(data.message || 'Failed to update profile');
@@ -345,6 +349,41 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
                 disabled={isSaving}
                 rows={4}
               />
+            </div>
+          </div>
+
+          <div className="form-section">
+            <h3>Theme Preferences</h3>
+            <div className="form-row" style={{alignItems: 'center'}}>
+              <div className="form-group" style={{flex: 1}}>
+                <label htmlFor="theme">My Theme</label>
+                <select
+                  id="theme"
+                  value={selectedThemeId}
+                  onChange={(e) => setSelectedThemeId(Number(e.target.value))}
+                  disabled={isSaving}
+                >
+                  {themes.map(theme => (
+                    <option key={theme.themeId} value={theme.themeId}>
+                      {theme.themeName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button 
+                type="button" 
+                className="btn-apply-theme"
+                onClick={() => {
+                  const theme = themes.find(t => t.themeId === selectedThemeId);
+                  if (theme) {
+                    applyTheme(theme);
+                    setPreviewThemeId(selectedThemeId);
+                  }
+                }}
+                disabled={isSaving}
+              >
+                Apply
+              </button>
             </div>
           </div>
 

@@ -169,7 +169,7 @@ app.get('/api/users', (req, res) => {
 // Update user profile endpoint
 app.put('/api/users/update', (req, res) => {
   try {
-    const { email, firstName, lastName, middleName, dob, gender, phoneNumber, address } = req.body;
+    const { email, firstName, lastName, middleName, dob, gender, phoneNumber, address, themeId } = req.body;
 
     if (!email) {
       return res.status(400).json({ success: false, message: 'Email is required' });
@@ -182,7 +182,6 @@ app.put('/api/users/update', (req, res) => {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    // Update user data
     users[userIndex] = {
       ...users[userIndex],
       firstName,
@@ -192,10 +191,10 @@ app.put('/api/users/update', (req, res) => {
       gender,
       phoneNumber,
       address,
+      themeId: themeId !== undefined ? themeId : users[userIndex].themeId,
       updatedAt: new Date().toISOString(),
     };
 
-    // Write to file
     if (writeUsers(users)) {
       const updatedUser = { ...users[userIndex] };
       delete updatedUser.password;
