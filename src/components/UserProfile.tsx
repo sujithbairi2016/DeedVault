@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import Header from './Header';
 import Sidebar from './Sidebar';

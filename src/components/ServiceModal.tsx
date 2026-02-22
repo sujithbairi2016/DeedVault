@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import './ServiceTiles.css'
 import { useAuth } from '../utils/AuthContext'
 

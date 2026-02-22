@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace = "com.deedvault.app"
+    compileSdk = rootProject.ext.compileSdkVersion
+    
+    signingConfigs {
+        release {
+            storeFile file('deed-vault-key.jks')
+            storePassword 'Suj1Madh8'
+            keyAlias 'deed-vault'
+            keyPassword 'Suj1Madh8'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.deedvault.app"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+// Custom task to generate the keystore file automatically
+task generateKeystore {
+    doLast {
+        def keystoreFile = file('deed-vault-key.jks')
+        if (!keystoreFile.exists()) {
+            ant.genkey(
+                keystore: keystoreFile.absolutePath,
+                alias: 'deed-vault',
+                storepass: 'Suj1Madh8',
+                keypass: 'Suj1Madh8',
+                dname: 'CN=DeedVault, OU=Dev, O=DeedVault, C=US',
+                validity: '10000',
+                keyalg: 'RSA',
+                keysize: '2048'
+            )
+            println "Keystore generated at ${keystoreFile.absolutePath}"
+        } else {
+            println "Keystore already exists."
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

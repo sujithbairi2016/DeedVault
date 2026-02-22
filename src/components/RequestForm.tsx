@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './ServiceTiles.css'
 import servicesData from '../../data/services.json'
 

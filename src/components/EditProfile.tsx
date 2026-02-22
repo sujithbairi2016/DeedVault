@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import { useTheme } from '../utils/ThemeContext';
 import Header from './Header';
@@ -14,14 +14,13 @@ interface EditProfileProps {
 }
 
 export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onSave, onCancel }: EditProfileProps) {
-  const { user, logout, updateProfile, error: authError } = useAuth();
-  const { themes, currentTheme, applyTheme, setTheme } = useTheme();
+  const { user, logout, error: authError } = useAuth();
+  const { themes, applyTheme, setTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
   const [selectedThemeId, setSelectedThemeId] = useState(user?.themeId || 1);
-  const [previewThemeId, setPreviewThemeId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -377,7 +376,6 @@ export default function EditProfile({ onLogout, onHomeClick, onProfileClick, onS
                   const theme = themes.find(t => t.themeId === selectedThemeId);
                   if (theme) {
                     applyTheme(theme);
-                    setPreviewThemeId(selectedThemeId);
                   }
                 }}
                 disabled={isSaving}

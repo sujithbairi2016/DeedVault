@@ -77,11 +77,7 @@ function AppContent() {
             setCurrentPage('login')
           }}
         />
-        <Dashboard 
-          onLogout={() => setCurrentPage('login')} 
-          onHomeClick={() => setCurrentPage('home')}
-          onProfileClick={() => setCurrentPage('profile')}
-        />
+        <Dashboard />
       </div>
     )
   }

@@ -8,9 +8,15 @@
     "server": "node server.js",
     "dev-with-server": "concurrently \"npm run server\" \"npm run dev\"",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cap:sync": "npm run build && npx cap sync",
+    "cap:open:android": "npx cap open android",
+    "cap:run:android": "npm run build && npx cap sync && npx cap run android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^8.1.0",
+    "@capacitor/core": "^8.1.0",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "express": "^5.2.1",
